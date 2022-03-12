@@ -1,0 +1,80 @@
+.container {
+    padding: 20px 20px 0;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 5px;
+}
+
+.description {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+.bottomWrapper {
+    display: flex;
+}
+
+.bottom {
+    display: flex;
+}
+
+.bottomLeft {
+    display: flex;
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.bottomRight {
+    flex: 0 0 auto;
+    width: 50%;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.bottomRight div + div{
+    margin-top: 3px;
+}
+
+
+.image {
+    width: 65px;
+}
+
+.image > img {
+    width: 100%;
+}
+
+.bottomTemp {
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bottomUtils {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.1;
+    transition: .3s;
+}
+
+.bottomUtils:hover {
+    transform: scale(1.1);
+}
+
+.activeMetric {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}

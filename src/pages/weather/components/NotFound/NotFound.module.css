@@ -1,0 +1,14 @@
+.notFound {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.notFoundText {
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.2;
+	color: #333333;
+}
