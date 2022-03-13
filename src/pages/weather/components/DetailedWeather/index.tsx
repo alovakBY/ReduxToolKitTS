@@ -7,19 +7,17 @@ import * as utils from "../../../../utils";
 import { IDetailedWeatherProps } from "../../../../types";
 
 import classes from "./DetailedWeather.module.css";
-// : FC<IDetailedWeatherProps>
-export const DetailedWeather = ({
+
+export const DetailedWeather : FC<IDetailedWeatherProps> = ({
     city,
     country,
     activeDay,
     isMetric,
     handleChangeMetric,
 }) => {
-    const day = dayjs(activeDay.dt * 1000).format("dddd");
+    const day = activeDay.dt && dayjs(activeDay.dt * 1000).format("dddd");
 
-    const time = activeDay.current_time
-        ? dayjs(activeDay.current_time * 1000).format("hA")
-        : null;
+    const time = activeDay.current_time && dayjs(activeDay.current_time * 1000).format("hA");
 
     const weatherDescription = utils.getWeatherDescription(
         activeDay.weather[0].description
@@ -27,9 +25,9 @@ export const DetailedWeather = ({
 
     const imageSrc = `http://openweathermap.org/img/wn/${activeDay.weather[0].icon}.png`;
 
-    const temp = (activeDay.temp.max || activeDay.temp).toFixed();
+    const temp = activeDay.temp.current_temp ? activeDay.temp.current_temp : activeDay.temp.max;
 
-    const windInfo = utils.getWindInfo(
+    const windInfo = activeDay.wind_deg && utils.getWindInfo(
         activeDay.wind_deg,
         activeDay.wind_speed,
         isMetric
@@ -50,7 +48,7 @@ export const DetailedWeather = ({
                     </div>
                     <div className={classes.bottomWrapper}>
                         <div className={classes.bottomTemp}>
-                            {temp}
+                            {temp && temp.toFixed()}
                             &#176;
                         </div>
                         <sup

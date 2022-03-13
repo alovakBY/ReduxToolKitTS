@@ -18,7 +18,7 @@ export const getWeatherDescription = (description : string) => {
     return `${description[0].toUpperCase()}${description.substring(1)}`;
 };
 
-export const getWindInfo = (deg: number, speed: number, isMetric: boolean) : string => {
+export const getWindInfo = (deg: number , speed: number, isMetric: boolean) : string => {
     const direction =
         deg > 336
             ? "N"

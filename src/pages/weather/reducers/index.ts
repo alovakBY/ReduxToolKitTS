@@ -1,8 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice  } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 import { getWeatherThunk } from "../thunks";
 
 import { IWeatherState, IWeatherDay } from '../../../types'
+
+import {IWeatherCurrent} from '../../../types'
 
 
 const initialState : IWeatherState = {
@@ -25,6 +27,7 @@ const initialState : IWeatherState = {
         temp: {
             min: null,
             max: null,
+				current_temp: null,
         },
         wind_deg: null,
         wind_speed: null,
@@ -60,33 +63,51 @@ const weatherReducer = createSlice({
                     return;
                 }
 
-                const currentCopy = {
-                    ...payload.weatherData.current,
-                    air_quality: payload.airQuality,
-                    current_time: payload.weatherData.current.dt,
+					 const {dt, temp, humidity,wind_speed, wind_deg, weather} = payload.weatherData.current
+
+                const currentCopy : IWeatherCurrent = {
+						dt,
+						humidity,
+						wind_speed,
+						wind_deg,
+						air_quality: payload.airQuality,
+						current_time: dt,
+						temp: {
+							current_temp: temp
+						},
+						weather,
+						id: ''
                 };
 
-                const weather = payload.weatherData.daily.map((day: IWeatherDay , index: number) => {
+                const weatherDaily = payload.weatherData.daily.map((day: IWeatherDay , index: number) => {
                     const id = uuid();
+						  const {dt, temp, humidity, wind_speed, wind_deg, weather} = day
                     if (index === 0) currentCopy.id = id;
                     return {
-                        ...day,
-                        id,
+							dt,
+							temp : {
+								max: temp.max,
+								min: temp.min
+							},
+							humidity,
+							wind_speed,
+							wind_deg,
+							weather,
+                     id,
                     };
                 });
                 state.country = payload.country;
                 state.city = payload.name;
-                state.weather = [...weather];
+                state.weather = [...weatherDaily];
                 state.current = currentCopy;
                 state.isLoading = false;
                 state.notFound = false;
                 state.errors = null;
             })
-            .addCase(getWeatherThunk.rejected, (state, {error}) => {
-                console.log(error)
+            .addCase(getWeatherThunk.rejected, (state, {error} ) => {
                 state.isLoading = false;
                 state.notFound = false;
-                state.errors = error.message;
+					 if (error.message) state.errors = error.message 
             });
     },
 });

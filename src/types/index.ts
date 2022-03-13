@@ -7,7 +7,7 @@ export interface IWeatherState {
 	current: null | IWeatherCurrent,
 	notFound: boolean,
 	isLoading: boolean,
-	errors: unknown,
+	errors: string | null ,
 	activeDay: IActiveDayDeault | IWeatherDay | IWeatherCurrent,
 }
 
@@ -25,6 +25,7 @@ export interface IActiveDayDeault {
 	temp: {
 		 min: null,
 		 max: null,
+		 current_temp: null
 	},
 	wind_deg: null,
 	wind_speed: null,
@@ -35,18 +36,13 @@ export interface IActiveDayDeault {
 export interface IWeatherCurrent {
 	 air_quality: number,
 	 current_time: number,
-	 id: string,
 	 dt: number,
-    sunrise: number,
-    sunset: number,
-    temp: number,
-    feels_like: number,
-    pressure: number,
+	 id: string,
+    temp:  {
+	 	current_temp: number,
+		max?: number,
+	 },
     humidity: number,
-    dew_point: number,
-    uvi: number,
-    clouds: number,
-    visibility: number,
     wind_speed: number,
     wind_deg: number,
     weather: [
@@ -57,36 +53,19 @@ export interface IWeatherCurrent {
         icon: string
       }
     ],
-    rain: {
-      "1h": number
-    }
 }
 
 export interface IWeatherDay {
+	current_time?: number,
+	air_quality?: number,
 	id: string,
 	dt: number,
-	sunrise?: number,
-	sunset?: number,
-	moonrise?: number,
-	moonset?: number,
-	moon_phase?: number,
 	temp: {
-	  day: number,
 	  min: number,
 	  max: number,
-	  night: number,
-	  eve: number,
-	  morn: number
+	  current_temp?: number,
 	},
-	feels_like: {
-	  day: number,
-	  night: number,
-	  eve: number,
-	  morn: number
-	},
-	pressure: number,
 	humidity: number,
-	dew_point: number,
 	wind_speed: number,
 	wind_deg: number,
 	weather: [
@@ -97,10 +76,6 @@ export interface IWeatherDay {
 		 icon: string
 	  }
 	],
-	clouds: number,
-	pop: number,
-	rain: number,
-	uvi: number
  }
 
  export interface IWeatherLayoutProps {
@@ -116,7 +91,7 @@ export interface IWeatherDay {
 	handleChangeInput: ChangeEventHandler<HTMLInputElement>,
 	handleClearInput: MouseEventHandler<HTMLButtonElement>,
 	handleSetActiveDay: Function,
-	handleChangeMetric: Function,
+	handleChangeMetric: MouseEventHandler<HTMLElement>,
  }
 
  export interface IDetailedWeatherProps {
@@ -124,7 +99,13 @@ export interface IWeatherDay {
 	country: string,
 	activeDay: IActiveDayDeault | IWeatherDay | IWeatherCurrent,
 	isMetric: boolean,
-	handleChangeMetric: Function
+	handleChangeMetric: MouseEventHandler<HTMLElement>
+ }
+
+ export interface IWeekDayWeatherItemProps {
+	day: IWeatherDay,
+	isActive: boolean,
+	handleSetActiveDay: Function,
  }
 
 

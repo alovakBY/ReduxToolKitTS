@@ -76,12 +76,12 @@ export const WeatherContainer = () => {
     const handleSetActiveDay = useCallback(
         (id) => {
             if (id === current?.id) {
-                setActiveDay(current);
+                dispatch(setActiveDay(current));
             } else {
                 const index = weather.findIndex((day) => {
                     return day.id === id;
                 });
-                setActiveDay(weather[index]);
+                dispatch(setActiveDay(weather[index]));
             }
         },
         [weather]

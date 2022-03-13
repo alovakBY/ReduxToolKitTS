@@ -1,12 +1,12 @@
 export interface IAirQuality {
-    [index: number]: number 
+    [index: number]: string 
 }
 
 export interface IWindDirecton {
     [index: string]: number 
 }
 
-export const AIR_QUALITY = {
+export const AIR_QUALITY : IAirQuality = {
     1: "Good",
     2: "Fair",
     3: "Moderate",

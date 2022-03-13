@@ -1,9 +1,11 @@
-import { memo } from "react";
+import { memo, FC } from "react";
 import dayjs from "dayjs";
+
+import {IWeekDayWeatherItemProps} from '../../../../types'
 
 import classes from "./WeekDayWeatherItem.module.css";
 
-export const WeekDayWeatherItem = memo(
+export const WeekDayWeatherItem : FC<IWeekDayWeatherItemProps> = memo(
     ({ day, isActive, handleSetActiveDay }) => {
         const imageSrc = `http://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
         const maxTemperature = day.temp.max.toFixed();
