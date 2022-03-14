@@ -6,10 +6,9 @@ import { WeatherLayout } from "../components/WeatherLayout";
 
 import { getWeatherThunk } from "../thunks";
 import { MEASUREMENT_SYSTEM } from "../../../constants";
-import { setSelectedDay } from '../reducers'
+import { setSelectedDay } from "../reducers";
 
-import {IWeatherState, IWeatherDay} from '../../../types'
-
+import { IWeatherState, IWeatherDay } from "../../../types";
 
 export const WeatherContainer = () => {
     const [textInput, setTextInput] = useState("");
@@ -18,13 +17,21 @@ export const WeatherContainer = () => {
     const inputFocus = useRef<HTMLInputElement>(null!);
 
     const dispatch = useAppDispatch();
-    const { selectedDay, notFound, isLoading, errors, weather, currentDay, city, country } =
-    useAppSelector<IWeatherState>((state) => state.weatherPage);
+    const {
+        selectedDay,
+        notFound,
+        isLoading,
+        errors,
+        weather,
+        currentDay,
+        city,
+        country,
+    } = useAppSelector<IWeatherState>((state) => state.weatherPage);
 
     useEffect(() => {
         if (currentDay) {
-            dispatch(setSelectedDay(currentDay))
-        } ;
+            dispatch(setSelectedDay(currentDay));
+        }
     }, [currentDay]);
 
     useEffect(() => {
@@ -52,13 +59,13 @@ export const WeatherContainer = () => {
             }
 
             clearTimeout(setTimeoutId.current);
-            setTimeoutId.current  = window.setTimeout(() => {
+            setTimeoutId.current = window.setTimeout(() => {
                 const units = isMetric ? "metric" : "imperial";
                 dispatch(
                     getWeatherThunk({
                         city: event.target.value,
                         units,
-                    } )
+                    })
                 );
             }, 1000);
         },
@@ -76,7 +83,7 @@ export const WeatherContainer = () => {
             if (id === currentDay?.id) {
                 dispatch(setSelectedDay(currentDay));
             } else {
-                const index = weather.findIndex((day : IWeatherDay) => {
+                const index = weather.findIndex((day: IWeatherDay) => {
                     return day.id === id;
                 });
                 dispatch(setSelectedDay(weather[index]));

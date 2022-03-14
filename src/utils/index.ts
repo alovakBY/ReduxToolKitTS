@@ -14,15 +14,19 @@ export const getTime = (time: number) => {
     return newTime[0] === "0" ? newTime.substring(1) : newTime;
 };
 
-export const getWeatherDescription = (description : string) => {
+export const getWeatherDescription = (description: string) => {
     return `${description[0].toUpperCase()}${description.substring(1)}`;
 };
 
-export const getWindInfo = (deg: number , speed: number, isMetric: boolean) : string => {
+export const getWindInfo = (
+    deg: number,
+    speed: number,
+    isMetric: boolean
+): string => {
     const direction =
         deg > 336
             ? "N"
-            : Object.keys(WIND_DIRECTIONS).find((direction : string)  => {
+            : Object.keys(WIND_DIRECTIONS).find((direction: string) => {
                   return deg < WIND_DIRECTIONS[direction];
               });
 

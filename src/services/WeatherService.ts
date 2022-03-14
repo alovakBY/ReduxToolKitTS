@@ -1,25 +1,30 @@
 import axios from "axios";
 import api from "../api/config";
 
-
 class WeatherService {
-    static instance = new WeatherService()
+    static instance = new WeatherService();
 
-    getWeather : Function = async function ({ city , units} : {city:string, units: string}) {
+    getWeather: Function = async function ({
+        city,
+        units,
+    }: {
+        city: string;
+        units: string;
+    }) {
         const response = await this.getCoordinates(city);
-    
+
         if (!response) return null;
-    
+
         const { name, country, lat, lon } = response;
-    
+
         const witherDataFull = await axios.all([
             this.getWeatherData(lat, lon, units),
             this.getAirPolutionData(lat, lon),
         ]);
-    
+
         const airQuality = witherDataFull[1].data.list[0].main.aqi;
         const weatherData = witherDataFull[0].data;
-    
+
         return {
             weatherData,
             airQuality,
@@ -48,4 +53,4 @@ class WeatherService {
     };
 }
 
-export default WeatherService.instance
+export default WeatherService.instance;

@@ -1,12 +1,12 @@
 export interface IAirQuality {
-    [index: number]: string
+    [index: number]: string;
 }
 
 export interface IWindDirecton {
-    [index: string]: number 
+    [index: string]: number;
 }
 
-export const AIR_QUALITY : IAirQuality = {
+export const AIR_QUALITY: IAirQuality = {
     1: "Good",
     2: "Fair",
     3: "Moderate",
@@ -14,7 +14,7 @@ export const AIR_QUALITY : IAirQuality = {
     5: "Very Poor",
 };
 
-export const WIND_DIRECTIONS : IWindDirecton  = {
+export const WIND_DIRECTIONS: IWindDirecton = {
     N: 23,
     NE: 68,
     E: 113,
@@ -25,7 +25,7 @@ export const WIND_DIRECTIONS : IWindDirecton  = {
     NW: 336,
 };
 
-export const MEASUREMENT_SYSTEM  = {
+export const MEASUREMENT_SYSTEM = {
     METRIC: "metric",
     IMPERIAL: "imperial",
 };

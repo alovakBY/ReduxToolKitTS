@@ -8,7 +8,7 @@ import { IDetailedWeatherProps } from "../../../../types";
 
 import classes from "./DetailedWeather.module.css";
 
-export const DetailedWeather : FC<IDetailedWeatherProps> = ({
+export const DetailedWeather: FC<IDetailedWeatherProps> = ({
     city,
     country,
     selectedDay,
@@ -17,7 +17,9 @@ export const DetailedWeather : FC<IDetailedWeatherProps> = ({
 }) => {
     const day = selectedDay.dt && dayjs(selectedDay.dt * 1000).format("dddd");
 
-    const time = selectedDay.current_time && dayjs(selectedDay.current_time * 1000).format("hA");
+    const time =
+        selectedDay.current_time &&
+        dayjs(selectedDay.current_time * 1000).format("hA");
 
     const weatherDescription = utils.getWeatherDescription(
         selectedDay.weather[0].description
@@ -25,13 +27,17 @@ export const DetailedWeather : FC<IDetailedWeatherProps> = ({
 
     const imageSrc = `http://openweathermap.org/img/wn/${selectedDay.weather[0].icon}.png`;
 
-    const temp = selectedDay.temp.current_temp ? selectedDay.temp.current_temp : selectedDay.temp.max;
+    const temp = selectedDay.temp.current_temp
+        ? selectedDay.temp.current_temp
+        : selectedDay.temp.max;
 
-    const windInfo = selectedDay.wind_deg && utils.getWindInfo(
-        selectedDay.wind_deg,
-        selectedDay.wind_speed,
-        isMetric
-    );
+    const windInfo =
+        selectedDay.wind_deg &&
+        utils.getWindInfo(
+            selectedDay.wind_deg,
+            selectedDay.wind_speed,
+            isMetric
+        );
 
     return (
         <div className={classes.container}>

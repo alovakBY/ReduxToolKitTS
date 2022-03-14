@@ -1,11 +1,11 @@
 import { memo, FC } from "react";
 import dayjs from "dayjs";
 
-import {IWeekDayWeatherItemProps} from '../../../../types'
+import { IWeekDayWeatherItemProps } from "../../../../types";
 
 import classes from "./WeekDayWeatherItem.module.css";
 
-export const WeekDayWeatherItem : FC<IWeekDayWeatherItemProps> = memo(
+export const WeekDayWeatherItem: FC<IWeekDayWeatherItemProps> = memo(
     ({ day, isActive, handleSetSelectedDay }) => {
         const imageSrc = `http://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
         const maxTemperature = day.temp.max && day.temp.max.toFixed();
@@ -13,7 +13,7 @@ export const WeekDayWeatherItem : FC<IWeekDayWeatherItemProps> = memo(
         const shortDay = dayjs(day.dt * 1000).format("ddd");
         return (
             <div
-                onClick={()  => handleSetSelectedDay(day.id)}
+                onClick={() => handleSetSelectedDay(day.id)}
                 className={`${classes.item} ${
                     isActive ? classes.active : null
                 }`}
