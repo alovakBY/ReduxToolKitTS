@@ -1,5 +1,5 @@
 export interface IAirQuality {
-    [index: number]: string 
+    [index: number]: string
 }
 
 export interface IWindDirecton {

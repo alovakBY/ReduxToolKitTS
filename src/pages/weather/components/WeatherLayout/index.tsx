@@ -10,7 +10,7 @@ import classes from "./WeatherLayout.module.css";
 export const WeatherLayout: FC<IWeatherLayoutProps> = ({
     isLoading,
     textInput,
-    activeDay,
+    selectedDay,
     city,
     country,
     weather,
@@ -19,7 +19,7 @@ export const WeatherLayout: FC<IWeatherLayoutProps> = ({
     inputFocus,
     handleChangeInput,
     handleClearInput,
-    handleSetActiveDay,
+    handleSetSelectedDay,
     handleChangeMetric,
 }) => {
     return (
@@ -43,11 +43,11 @@ export const WeatherLayout: FC<IWeatherLayoutProps> = ({
                         {notFound ? (
                             <NotFound />
                         ) : (
-                            activeDay.dt && (
+                            selectedDay.id && (
                                 <>
                                     <DetailedWeather
                                         isMetric={isMetric}
-                                        activeDay={activeDay}
+                                        selectedDay={selectedDay}
                                         city={city}
                                         country={country}
                                         handleChangeMetric={handleChangeMetric}
@@ -56,11 +56,11 @@ export const WeatherLayout: FC<IWeatherLayoutProps> = ({
                                         {weather.map((day : IWeatherDay) => {
                                             return (
                                                 <WeekDayWeatherItem
-                                                handleSetActiveDay={
-                                                    handleSetActiveDay
+                                                handleSetSelectedDay={
+                                                    handleSetSelectedDay
                                                 }
                                                 isActive={
-                                                    activeDay.id === day.id
+                                                    selectedDay.id === day.id
                                                 }
                                                 day={day}
                                                 key={day.id}

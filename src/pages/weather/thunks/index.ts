@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getWeather } from "../../../services/WeatherService";
+import  api  from "../../../services/WeatherService";
 
 interface IArgs  {
     city: string,
@@ -9,6 +9,6 @@ interface IArgs  {
 export const getWeatherThunk = createAsyncThunk(
     "weather/getWeather",
     ({ city , units } : IArgs) => {
-        return getWeather({ city, units }); 
+        return api.getWeather({ city, units }); 
     }
 );

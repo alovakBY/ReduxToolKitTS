@@ -1,14 +1,14 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 
 import { WeatherLayout } from "../components/WeatherLayout";
 
 import { getWeatherThunk } from "../thunks";
 import { MEASUREMENT_SYSTEM } from "../../../constants";
-import { setActiveDay, changeNotFound } from '../reducers'
+import { setSelectedDay } from '../reducers'
 
-import {IWeatherState, IWeatherCurrent, IWeatherDay} from '../../../types'
+import {IWeatherState, IWeatherDay} from '../../../types'
 
 
 export const WeatherContainer = () => {
@@ -18,17 +18,17 @@ export const WeatherContainer = () => {
     const inputFocus = useRef<HTMLInputElement>(null!);
 
     const dispatch = useAppDispatch();
-    const { activeDay, notFound, isLoading, errors, weather, current, city, country } =
+    const { selectedDay, notFound, isLoading, errors, weather, currentDay, city, country } =
     useAppSelector<IWeatherState>((state) => state.weatherPage);
 
     useEffect(() => {
-        if (current) {
-            dispatch(setActiveDay(current))
+        if (currentDay) {
+            dispatch(setSelectedDay(currentDay))
         } ;
-    }, [current]);
+    }, [currentDay]);
 
     useEffect(() => {
-        if (activeDay.dt) {
+        if (selectedDay.dt) {
             const units = isMetric
                 ? MEASUREMENT_SYSTEM.METRIC
                 : MEASUREMENT_SYSTEM.IMPERIAL;
@@ -48,7 +48,6 @@ export const WeatherContainer = () => {
 
             if (!event.target.value) {
                 window.clearTimeout(setTimeoutId.current);
-                dispatch(changeNotFound());
                 return;
             }
 
@@ -69,19 +68,18 @@ export const WeatherContainer = () => {
     const handleClearInput = useCallback(() => {
         clearTimeout(setTimeoutId.current);
         setTextInput("");
-        dispatch(changeNotFound());
         inputFocus.current.focus();
     }, []);
 
-    const handleSetActiveDay = useCallback(
+    const handleSetSelectedDay = useCallback(
         (id) => {
-            if (id === current?.id) {
-                dispatch(setActiveDay(current));
+            if (id === currentDay?.id) {
+                dispatch(setSelectedDay(currentDay));
             } else {
-                const index = weather.findIndex((day) => {
+                const index = weather.findIndex((day : IWeatherDay) => {
                     return day.id === id;
                 });
-                dispatch(setActiveDay(weather[index]));
+                dispatch(setSelectedDay(weather[index]));
             }
         },
         [weather]
@@ -95,7 +93,7 @@ export const WeatherContainer = () => {
         <WeatherLayout
             isLoading={isLoading}
             textInput={textInput}
-            activeDay={activeDay}
+            selectedDay={selectedDay}
             city={city}
             country={country}
             weather={weather}
@@ -105,7 +103,7 @@ export const WeatherContainer = () => {
             handleChangeMetric={handleChangeMetric}
             handleClearInput={handleClearInput}
             handleChangeInput={handleChangeInput}
-            handleSetActiveDay={handleSetActiveDay}
+            handleSetSelectedDay={handleSetSelectedDay}
         />
     );
 };

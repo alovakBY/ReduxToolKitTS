@@ -11,25 +11,25 @@ import classes from "./DetailedWeather.module.css";
 export const DetailedWeather : FC<IDetailedWeatherProps> = ({
     city,
     country,
-    activeDay,
+    selectedDay,
     isMetric,
     handleChangeMetric,
 }) => {
-    const day = activeDay.dt && dayjs(activeDay.dt * 1000).format("dddd");
+    const day = selectedDay.dt && dayjs(selectedDay.dt * 1000).format("dddd");
 
-    const time = activeDay.current_time && dayjs(activeDay.current_time * 1000).format("hA");
+    const time = selectedDay.current_time && dayjs(selectedDay.current_time * 1000).format("hA");
 
     const weatherDescription = utils.getWeatherDescription(
-        activeDay.weather[0].description
+        selectedDay.weather[0].description
     );
 
-    const imageSrc = `http://openweathermap.org/img/wn/${activeDay.weather[0].icon}.png`;
+    const imageSrc = `http://openweathermap.org/img/wn/${selectedDay.weather[0].icon}.png`;
 
-    const temp = activeDay.temp.current_temp ? activeDay.temp.current_temp : activeDay.temp.max;
+    const temp = selectedDay.temp.current_temp ? selectedDay.temp.current_temp : selectedDay.temp.max;
 
-    const windInfo = activeDay.wind_deg && utils.getWindInfo(
-        activeDay.wind_deg,
-        activeDay.wind_speed,
+    const windInfo = selectedDay.wind_deg && utils.getWindInfo(
+        selectedDay.wind_deg,
+        selectedDay.wind_speed,
         isMetric
     );
 
@@ -74,11 +74,11 @@ export const DetailedWeather : FC<IDetailedWeatherProps> = ({
                     </div>
                 </div>
                 <div className={classes.bottomRight}>
-                    <div>Humidity: {activeDay.humidity}%</div>
+                    <div>Humidity: {selectedDay.humidity}%</div>
                     <div>Wind: {windInfo}</div>
-                    {activeDay.air_quality && (
+                    {selectedDay.air_quality && (
                         <div>
-                            AirQuality: {AIR_QUALITY[activeDay.air_quality]}
+                            AirQuality: {AIR_QUALITY[selectedDay.air_quality]}
                         </div>
                     )}
                 </div>

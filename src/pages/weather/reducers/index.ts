@@ -4,50 +4,49 @@ import { getWeatherThunk } from "../thunks";
 
 import { IWeatherState, IWeatherDay } from '../../../types'
 
-import {IWeatherCurrent} from '../../../types'
 
 
 const initialState : IWeatherState = {
     country: "",
     city: "",
     weather: [],
-    current: null,
+    currentDay: null,
     notFound: false,
-    activeDay: {
-        dt: null,
-        current_time: null,
-        weather: [
-            {
-              id: null,
-              main: "",
-              description: "",
-              icon: ""
-            }
-        ],
-        temp: {
-            min: null,
-            max: null,
-				current_temp: null,
+    selectedDay:  {
+            dt: 0,
+            current_time: 0,
+            weather: [
+                {
+                  id: "",
+                  main: "",
+                  description: "",
+                  icon: ""
+                }
+            ],
+            temp: {
+                min: 0,
+                max: 0,
+                    current_temp: 0,
+            },
+            wind_deg: 0,
+            wind_speed: 0,
+            humidity: 0,
+            air_quality: 0,
+            id: ""
         },
-        wind_deg: null,
-        wind_speed: null,
-        humidity: null,
-        air_quality: null
-    },
     isLoading: false,
     errors: null,
 };
+
+
 
 const weatherReducer = createSlice({
     name: "weather",
     initialState,
     reducers: {
-        setActiveDay: (state, {payload}) => {
-            state.activeDay = payload
+        setSelectedDay: (state, {payload}) => {
+            state.selectedDay = payload
         },
-        changeNotFound: (state) => {
-            state.notFound = !state.notFound
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -65,7 +64,7 @@ const weatherReducer = createSlice({
 
 					 const {dt, temp, humidity,wind_speed, wind_deg, weather} = payload.weatherData.current
 
-                const currentCopy : IWeatherCurrent = {
+                const currentCopy : IWeatherDay = {
 						dt,
 						humidity,
 						wind_speed,
@@ -81,7 +80,7 @@ const weatherReducer = createSlice({
 
                 const weatherDaily = payload.weatherData.daily.map((day: IWeatherDay , index: number) => {
                     const id = uuid();
-						  const {dt, temp, humidity, wind_speed, wind_deg, weather} = day
+					const {dt, temp, humidity, wind_speed, wind_deg, weather} = day
                     if (index === 0) currentCopy.id = id;
                     return {
 							dt,
@@ -99,7 +98,7 @@ const weatherReducer = createSlice({
                 state.country = payload.country;
                 state.city = payload.name;
                 state.weather = [...weatherDaily];
-                state.current = currentCopy;
+                state.currentDay = currentCopy;
                 state.isLoading = false;
                 state.notFound = false;
                 state.errors = null;
@@ -112,6 +111,6 @@ const weatherReducer = createSlice({
     },
 });
 
-export const {setActiveDay, changeNotFound} = weatherReducer.actions
+export const {setSelectedDay} = weatherReducer.actions
 
 export default weatherReducer.reducer;
