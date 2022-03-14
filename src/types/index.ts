@@ -36,6 +36,7 @@ export interface IWeatherDay {
 
  export interface IWeatherLayoutProps {
 	isLoading: boolean,
+	errors: null | string,
 	textInput: string,
 	selectedDay: IWeatherDay ,
 	city: string,

@@ -92,6 +92,7 @@ export const WeatherContainer = () => {
     return (
         <WeatherLayout
             isLoading={isLoading}
+            errors={errors}
             textInput={textInput}
             selectedDay={selectedDay}
             city={city}

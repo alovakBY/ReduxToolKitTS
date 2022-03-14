@@ -28,7 +28,7 @@ class WeatherService {
         };
     };
 
-    getCoordinates : Function = async function (city: string) {
+    getCoordinates = async function (city: string) {
         const responseCoordinates = await api.get("/geo/1.0/direct", {
             params: { q: city },
         });
